@@ -106,11 +106,13 @@ class SnakeGame(tk.Tk):
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40,
-            font=('consolas', 20), text="High Score: {}".format(self.high_score), fill="white"
+            font=('consolas', 20),
+            text="High Score: {}".format(self.high_score), fill="white"
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 70,
-            font=('consolas', 20), text="Press Enter to Restart", fill="white", tag="restart"
+            font=('consolas', 20),
+            text="Press Enter to Restart", fill="white", tag="restart"
         )
         self.bind('<Return>', self.restart_game)
 
@@ -128,7 +130,8 @@ class SnakeGame(tk.Tk):
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40,
-            font=('consolas', 20), text="Press Enter to Start", fill="white", tag="start_prompt"
+            font=('consolas', 20),
+            text="Press Enter to Start", fill="white", tag="start_prompt"
         )
         self.bind('<Return>', self.start_game_from_title)
 
