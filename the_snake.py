@@ -27,7 +27,7 @@ class SnakeGame(tk.Tk):
         self.food = None
 
         self.label = tk.Label(
-            self, text="Score:{}".format(self.score), font=('consolas', 20)
+            self, text=f"Score:{self.score}", font=('consolas', 20)
         )
         self.label.pack()
 
@@ -63,13 +63,13 @@ class SnakeGame(tk.Tk):
         self.canvas.delete("all")
         self.score = 0
         self.direction = 'down'
-        self.label.config(text="Score:{}".format(self.score))
+        self.label.config(text=f"Score:{self.score}")
         self.snake = Snake(self.canvas)
         self.food = Food(self.canvas, self.snake)
         self.next_turn()
 
     def next_turn(self):
-        """Обновляет состояние игры, перемещает змейку и проверяет столкновения."""
+        """Обновляет состояние, перемещает змейку и проверяет столкновения."""
         self.snake.move(self.direction)
 
         if self.snake.check_collisions():
@@ -77,7 +77,7 @@ class SnakeGame(tk.Tk):
         else:
             if self.snake.eat_food(self.food):
                 self.score += 1
-                self.label.config(text="Score:{}".format(self.score))
+                self.label.config(text=f"Score:{self.score}")
                 self.canvas.delete("food")
                 self.food = Food(self.canvas, self.snake)
             self.after(SPEED, self.next_turn)
@@ -98,16 +98,17 @@ class SnakeGame(tk.Tk):
         self.canvas.delete(tk.ALL)
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 - 40,
-            font=('consolas', 70), text="GAME OVER", fill="red", tag="gameover"
+            font=('consolas', 70), text="GAME OVER", fill="red",
+            tag="gameover"
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 10,
-            font=('consolas', 20), text="Score: {}".format(self.score), fill="white"
+            font=('consolas', 20), text=f"Score: {self.score}", fill="white"
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40,
             font=('consolas', 20),
-            text="High Score: {}".format(self.high_score), fill="white"
+            text=f"High Score: {self.high_score}", fill="white"
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 70,
@@ -126,7 +127,8 @@ class SnakeGame(tk.Tk):
         self.canvas.delete("all")
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 - 40,
-            font=('consolas', 50), text="Snake Game", fill="white", tag="title"
+            font=('consolas', 50), text="Snake Game", fill="white",
+            tag="title"
         )
         self.canvas.create_text(
             GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40,
@@ -157,7 +159,7 @@ class Snake:
 
         for i in range(0, BODY_PARTS):
             self.coordinates.append([start_x, start_y])
-            start_x -= SPACE_SIZE  # Move the next part to the left of the previous part
+            start_x -= SPACE_SIZE  # Move the next part to the left
 
         for x, y in self.coordinates:
             square = self.canvas.create_rectangle(
@@ -197,7 +199,7 @@ class Snake:
     def eat_food(self, food):
         """Проверяет, съела ли змейка еду."""
         if self.coordinates[0] == food.coordinates:
-            self.coordinates.append(self.coordinates[-1])  # Add new segment at the snake's tail
+            self.coordinates.append(self.coordinates[-1])  # Add tail segment
             square = self.canvas.create_rectangle(
                 self.coordinates[-1][0], self.coordinates[-1][1],
                 self.coordinates[-1][0] + SPACE_SIZE,
@@ -209,7 +211,7 @@ class Snake:
         return False
 
     def check_collisions(self):
-        """Проверяет на наличие столкновений со стенами или телом змейки."""
+        """Проверяет на наличие столкновений с телом змейки."""
         x, y = self.coordinates[0]
 
         # Проверка на столкновения с телом
